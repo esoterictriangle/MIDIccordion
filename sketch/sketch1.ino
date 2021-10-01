@@ -40,4 +40,5 @@ if digitalRead(2) == LOW {
 https://wbsimms.com/use-74hc595-monitor-many-digital-inputs/
 https://tttapa.github.io/Control-Surface-doc/Doxygen/df/d9e/2_8RGB-LED-Chaser_8ino-example.html
 https://forum.arduino.cc/t/74hc595-used-for-shift-input-not-output/160028/3
+https://www.kevindarrah.com/download/arduino_code/ShiftRegisterInput2_piano.ino
 */
