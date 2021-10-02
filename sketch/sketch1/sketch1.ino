@@ -2,9 +2,6 @@
 
 USBMIDI_Interface midi;
 
-byte check;
-int i;
-
 Timer<millis> timer = 10;
 
 ShiftRegisterOut<8> mux {
@@ -12,57 +9,43 @@ ShiftRegisterOut<8> mux {
     8, //clock (SH_CP or SRCLK)
     9, //latch (ST_CP or RCLK)
     MSBFIRST
-};
+}
 
-NoteButton scale[] {
-    {mux.pin(0), {60, CHANNEL_1}, 127},
-    {mux.pin(1), {61, CHANNEL_1}, 127},
-    {mux.pin(2), {62, CHANNEL_1}, 127},
-    {mux.pin(4), {63, CHANNEL_1}, 127},
-    {mux.pin(5), {64, CHANNEL_1}, 127},
-    {mux.pin(6), {65, CHANNEL_1}, 127},
-    {mux.pin(7), {66, CHANNEL_1}, 127},
-    {mux.pin(8), {67, CHANNEL_1}, 127},
-};
+const MIDIAddress 0 {MIDI_Notes::C(4), CHANNEL_1};
+const MIDIAddress 1 {MIDI_Notes::D(4), CHANNEL_1};
+const MIDIAddress 2 {MIDI_Notes::E(4), CHANNEL_1};
+const MIDIAddress 3 {MIDI_Notes::F(4), CHANNEL_1};
+const MIDIAddress 4 {MIDI_Notes::G(4), CHANNEL_1};
+const MIDIAddress 5 {MIDI_Notes::A(4), CHANNEL_1};
+const MIDIAddress 6 {MIDI_Notes::B(4), CHANNEL_1};
+const MIDIAddress 7 {MIDI_Notes::C(5), CHANNEL_1};
 
 void setup() {
+    pinMode(2, Input);
     Control_Surface.begin();
 }
 
 void loop(){
     Control_Surface.loop();
     if(timer) {
-        for(i=0; i<50; i++)
+        for(j=0; j<50; j++)
         delayMicroseconds(1000);
 
         check=1;
         for (i = 0; i < 8; i++) {
-            mux.digitalWrite(check, HIGH);
+            digitalWrite(mux.pin(check), HIGH);
             if (digitalRead(6) == HIGH)
-                digitalWrite(i, HIGH);
+                midi.sendNoteOn(i, 127);
             else
-                digitalWrite(i, LOW);
+                midi.sendNoteOff(i, 0);
 
         check = check<<1;
         }
-    };
+    }
 }
 
 /*
-for(j=0; j<50; j++)
-    delayMicroseconds(1000);
-
-check=1;
-for (i = 0; i < 8; i++) {
-mux.digitalWrite(check, HIGH);
-if (digitalRead(6) == HIGH)
-    digitalWrite(i, HIGH);
-else
-    digitalWrite(i, LOW);
-
-check = check<<1;
-}
-
+bit from kevindarrah's output scan example:
 for(j=0; j<50; j++)
     delayMicroseconds(1000);
 
