@@ -2,9 +2,12 @@
 
 USBMIDI_Interface midi;
 
-const addressmatrix<5,2> notes {{
-    {60,61,62,63,64},
-    {65,66,67,68,69}
+const AddressMatrix<5, 2> notes {{
+    {60,65},
+    {61,66},
+    {62,67},
+    {63,68},
+    {64,69},
 }};
 
 NoteButtonMatrix<5,2> matrix {
