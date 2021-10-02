@@ -2,6 +2,9 @@
 
 USBMIDI_Interface midi;
 
+byte check;
+int i;
+
 Timer<millis> timer = 10;
 
 ShiftRegisterOut<8> mux {
@@ -9,28 +12,27 @@ ShiftRegisterOut<8> mux {
     8, //clock (SH_CP or SRCLK)
     9, //latch (ST_CP or RCLK)
     MSBFIRST
-}
+};
 
-NoteButton scale {
-    {mux.pin(0), {MIDI_Notes::C(4), CHANNEL_1}, velocity=127},
-    {mux.pin(1), {MIDI_Notes::D(4), CHANNEL_1}, velocity=127},
-    {mux.pin(2), {MIDI_Notes::E(4), CHANNEL_1}, velocity=127},
-    {mux.pin(4), {MIDI_Notes::F(4), CHANNEL_1}, velocity=127},
-    {mux.pin(5), {MIDI_Notes::G(4), CHANNEL_1}, velocity=127},
-    {mux.pin(6), {MIDI_Notes::A(4), CHANNEL_1}, velocity=127},
-    {mux.pin(7), {MIDI_Notes::B(4), CHANNEL_1}, velocity=127},
-    {mux.pin(8), {MIDI_Notes::C(5), CHANNEL_1}, velocity=127},
+NoteButton scale[] {
+    {mux.pin(0), {60, CHANNEL_1}, 127},
+    {mux.pin(1), {61, CHANNEL_1}, 127},
+    {mux.pin(2), {62, CHANNEL_1}, 127},
+    {mux.pin(4), {63, CHANNEL_1}, 127},
+    {mux.pin(5), {64, CHANNEL_1}, 127},
+    {mux.pin(6), {65, CHANNEL_1}, 127},
+    {mux.pin(7), {66, CHANNEL_1}, 127},
+    {mux.pin(8), {67, CHANNEL_1}, 127},
 };
 
 void setup() {
-    pinMode(2, Input);
     Control_Surface.begin();
 }
 
 void loop(){
     Control_Surface.loop();
     if(timer) {
-        for(j=0; j<50; j++)
+        for(i=0; i<50; i++)
         delayMicroseconds(1000);
 
         check=1;
@@ -43,7 +45,7 @@ void loop(){
 
         check = check<<1;
         }
-    }
+    };
 }
 
 /*
