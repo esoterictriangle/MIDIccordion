@@ -2,6 +2,8 @@
 
 USBMIDI_Interface midi;
 
+Timer<millis> timer = 10;
+
 ShiftRegisterOut<8> mux {
     7, //data (DS or SER)
     8, //clock (SH_CP or SRCLK)
@@ -21,21 +23,62 @@ NoteButton scale {
 };
 
 void setup() {
+    pinMode(2, Input);
     Control_Surface.begin();
 }
 
 void loop(){
     Control_Surface.loop();
+    if(timer) {
+        for(j=0; j<50; j++)
+        delayMicroseconds(1000);
+
+        check=1;
+        for (i = 0; i < 8; i++) {
+            mux.digitalWrite(check, HIGH);
+            if (digitalRead(6) == HIGH)
+                digitalWrite(i, HIGH);
+            else
+                digitalWrite(i, LOW);
+
+        check = check<<1;
+        }
+    }
 }
 
 /*
+for(j=0; j<50; j++)
+    delayMicroseconds(1000);
+
+check=1;
 for (i = 0; i < 8; i++) {
-digitalWrite(mux(i), LOW);
-delay(50); //this is long
-if digitalRead(2) == LOW {
-    digitalWrite()
+mux.digitalWrite(check, HIGH);
+if (digitalRead(6) == HIGH)
+    digitalWrite(i, HIGH);
+else
+    digitalWrite(i, LOW);
+
+check = check<<1;
 }
-}
+
+for(j=0; j<50; j++)
+    delayMicroseconds(1000);
+
+    Check=1;
+    for(j=0; j<8; j++){
+  SPI.transfer(Check);
+  SPI.transfer(Output);
+  digitalWrite(4, HIGH);
+  digitalWrite(4, LOW);
+  delayMicroseconds(500);
+  if(digitalRead(2)==HIGH)
+      bitWrite(Output, j, 1);
+  else
+      bitWrite(Output, j, 0);
+  
+  
+  Check = Check<<1;
+    }//j
 
 https://wbsimms.com/use-74hc595-monitor-many-digital-inputs/
 https://tttapa.github.io/Control-Surface-doc/Doxygen/df/d9e/2_8RGB-LED-Chaser_8ino-example.html
