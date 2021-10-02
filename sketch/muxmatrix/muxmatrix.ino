@@ -7,7 +7,7 @@ ShiftRegisterOut<8> mux {
     8, //clock (SH_CP or SRCLK)
     9, //latch (ST_CP or RCLK)
     MSBFIRST
-}
+};
 
 const AddressMatrix<1, 8> notes {{
     {60,61,62,63,64,65,66,67},
