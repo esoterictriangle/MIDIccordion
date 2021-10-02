@@ -11,16 +11,14 @@ ShiftRegisterOut<8> mux {
     MSBFIRST
 }
 
-NoteButton scale {
-    {mux.pin(0), {MIDI_Notes::C(4), CHANNEL_1}, velocity=127},
-    {mux.pin(1), {MIDI_Notes::D(4), CHANNEL_1}, velocity=127},
-    {mux.pin(2), {MIDI_Notes::E(4), CHANNEL_1}, velocity=127},
-    {mux.pin(4), {MIDI_Notes::F(4), CHANNEL_1}, velocity=127},
-    {mux.pin(5), {MIDI_Notes::G(4), CHANNEL_1}, velocity=127},
-    {mux.pin(6), {MIDI_Notes::A(4), CHANNEL_1}, velocity=127},
-    {mux.pin(7), {MIDI_Notes::B(4), CHANNEL_1}, velocity=127},
-    {mux.pin(8), {MIDI_Notes::C(5), CHANNEL_1}, velocity=127},
-};
+const MIDIAddress 0 {MIDI_Notes::C(4), CHANNEL_1};
+const MIDIAddress 1 {MIDI_Notes::D(4), CHANNEL_1};
+const MIDIAddress 2 {MIDI_Notes::E(4), CHANNEL_1};
+const MIDIAddress 3 {MIDI_Notes::F(4), CHANNEL_1};
+const MIDIAddress 4 {MIDI_Notes::G(4), CHANNEL_1};
+const MIDIAddress 5 {MIDI_Notes::A(4), CHANNEL_1};
+const MIDIAddress 6 {MIDI_Notes::B(4), CHANNEL_1};
+const MIDIAddress 7 {MIDI_Notes::C(5), CHANNEL_1};
 
 void setup() {
     pinMode(2, Input);
@@ -35,11 +33,11 @@ void loop(){
 
         check=1;
         for (i = 0; i < 8; i++) {
-            mux.digitalWrite(check, HIGH);
+            digitalWrite(mux.pin(check), HIGH);
             if (digitalRead(6) == HIGH)
-                digitalWrite(i, HIGH);
+                midi.sendNoteOn(i, 127);
             else
-                digitalWrite(i, LOW);
+                midi.sendNoteOff(i, 0);
 
         check = check<<1;
         }
