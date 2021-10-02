@@ -9,30 +9,30 @@ ShiftRegisterOut<8> mux {
     8, //clock (SH_CP or SRCLK)
     9, //latch (ST_CP or RCLK)
     MSBFIRST
-}
+};
 
-const MIDIAddress 0 {MIDI_Notes::C(4), CHANNEL_1};
-const MIDIAddress 1 {MIDI_Notes::D(4), CHANNEL_1};
-const MIDIAddress 2 {MIDI_Notes::E(4), CHANNEL_1};
-const MIDIAddress 3 {MIDI_Notes::F(4), CHANNEL_1};
-const MIDIAddress 4 {MIDI_Notes::G(4), CHANNEL_1};
-const MIDIAddress 5 {MIDI_Notes::A(4), CHANNEL_1};
-const MIDIAddress 6 {MIDI_Notes::B(4), CHANNEL_1};
-const MIDIAddress 7 {MIDI_Notes::C(5), CHANNEL_1};
+const MIDIAddress note_0 {60, CHANNEL_1};
+const MIDIAddress note_1 {61, CHANNEL_1};
+const MIDIAddress note_2 {62, CHANNEL_1};
+const MIDIAddress note_3 {63, CHANNEL_1};
+const MIDIAddress note_4 {64, CHANNEL_1};
+const MIDIAddress note_5 {65, CHANNEL_1};
+const MIDIAddress note_6 {66, CHANNEL_1};
+const MIDIAddress note_7 {67, CHANNEL_1};
 
 void setup() {
-    pinMode(2, Input);
+    pinMode(6, INPUT);
     Control_Surface.begin();
 }
 
 void loop(){
     Control_Surface.loop();
     if(timer) {
-        for(j=0; j<50; j++)
+        for(int j=0; j<50; j++)
         delayMicroseconds(1000);
 
-        check=1;
-        for (i = 0; i < 8; i++) {
+        byte check = 1;
+        for (int i = 0; i < 8; i++) {
             digitalWrite(mux.pin(check), HIGH);
             if (digitalRead(6) == HIGH)
                 midi.sendNoteOn(i, 127);
