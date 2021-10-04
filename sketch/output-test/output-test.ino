@@ -18,6 +18,7 @@ void loop(){
 for (uint8_t i = 0; i < 4; i++) {
     digitalWrite(mux.pin(i), HIGH);
     delay(500);
+    digitalWrite(mux.pin(i), LOW);
 }
 /* second test, to write all pins using buffer, then update after a delay
 if (digitalRead(mux.pin(0)) == LOW) {
