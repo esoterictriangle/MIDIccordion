@@ -39,10 +39,11 @@ if (timer) {
             digitalWrite(mux.pin(j), HIGH);
         }
     digitalWrite(mux.pin(i), LOW); //set target low
-    if (digitalRead(monitor) == LOW) { //the thought here is we're writing outputs only above; in order for these buttons to recieve input they need to be manually written
-        buttons[i].update() = AH::Button::Falling;
-    } else { buttons[i].update() = AH::Button::Rising; //compiling error: improper use of void. will need a different method to change the button state--review buttonmatrix?
+    if (digitalRead(monitor) == LOW) {
+        digitalWrite(mux.pin((i + 4)), HIGH) //turn on LED on register pins 4-8
+    } else { digitalWrite(mux.pin((i+4)), LOW) //turn off LED
     }
 }
 }
 }
+
