@@ -1,4 +1,6 @@
 #include <Control_Surface.h>
+ 
+using namespace ExtIO; //without this declared I can't write to extended pins
 
 USBMIDI_Interface midi;
 
@@ -7,37 +9,39 @@ ShiftRegisterOut<8> mux {
     8, //clock (SH_CP or SRCLK)
     9, //latch (ST_CP or RCLK)
     MSBFIRST
-}
+};
 
 void setup() {
-    mux.begin()
+    Control_Surface.begin();
 }
 
 void loop(){
-//should move the lit LED down the line every half second
+  /*
+//move the lit LED down the line every half second
 for (uint8_t i = 0; i < 4; i++) {
     digitalWrite(mux.pin(i), HIGH);
     delay(500);
     digitalWrite(mux.pin(i), LOW);
 }
-/* second test, to write all pins using buffer, then update after a delay
+// second test, to write all pins using buffer, then update after a delay
 if (digitalRead(mux.pin(0)) == LOW) {
-    digitalWriteBuffered({mux.pin(0), mux.pin(1), mux.pin(2), mux.pin(3)}, HIGH);
+  for (uint8_t i = 0; i < 4; i++)
+    digitalWriteBuffered(mux.pin(i), HIGH);
 } else {
-    digitalWriteBuffered({mux.pin(0), mux.pin(1), mux.pin(2), mux.pin(3)}, LOW);
+  for (uint8_t i = 0; i < 4; i++)
+    digitalWriteBuffered(mux.pin(i), LOW);
 }
 delay(500);
-updateBufferedInputs()
-
+updateBufferedOutputs(); //for whatever reason this function is seen as not declared
 */
 
-/* third test, should actually behave exactly as second
+//third test, should actually behave exactly as second (it does--er. I think. The buffered functions don't seem to be working.)
 if (digitalRead(mux.pin(0)) == LOW) {
-    digitalWrite({mux.pin(0), mux.pin(1), mux.pin(2), mux.pin(3)}, HIGH);
+  for (uint8_t i = 0; i < 4; i++)
+    digitalWrite(mux.pin(i), HIGH);
 } else {
-    digitalWrite({mux.pin(0), mux.pin(1), mux.pin(2), mux.pin(3)}, LOW);
+  for (uint8_t i = 0; i < 4; i++)
+    digitalWrite(mux.pin(i), LOW);
 }
 delay(500);
-
-*/
 }
