@@ -21,7 +21,7 @@ NoteButton buttons[] {
 };
 
 void setup() {
-    pinMode(monitor, INPUT);
+    pinMode(monitor, INPUT); //there's also an INPUT_PULLUP--this may need to be that
     Control_Surface.begin();
 }
 
@@ -46,4 +46,17 @@ if (timer) {
 }
 }
 }
-
+/*
+void shiftRegisterMatrix() {
+    for (uint8_t i = 0; i < mux.length(); i++) {
+        for (uint8_t j = 0; j < mux.length(); j++) { //write all high
+            digitalWrite(mux.pin(j), HIGH);
+        }
+    digitalWrite(mux.pin(i), LOW); //set target low
+    if (digitalRead(monitor) == LOW) { //the thought here is we're writing outputs only above; in order for these buttons to recieve input they need to be manually written
+        //action to write the button falling/play the correct note/do the thing
+    } else { //action to write the button rising/stop the note/undo the thing
+    }
+}
+}
+*/
