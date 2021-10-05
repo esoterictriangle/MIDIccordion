@@ -1,4 +1,5 @@
 #include <Control_Surface.h>
+using namespace ExtIO;
 
 USBMIDI_Interface midi;
 
@@ -7,20 +8,20 @@ ShiftRegisterOut<8> mux {
     8, //clock (SH_CP or SRCLK)
     9, //latch (ST_CP or RCLK)
     MSBFIRST
-}
-pin_t monitor = 6
+};
+pin_t monitor = 6;
 
-Timer<millis> timer(25)
+Timer<millis> timer(25);
 
 NoteButton buttons[] {
-    {mux.pin(0), {note(C, 4), CHANNEL_1}, 127},
-    {mux.pin(1), {note(D, 4), CHANNEL_1}, 127},
-    {mux.pin(2), {note(E, 4), CHANNEL_1}, 127},
-    {mux.pin(3), {note(F, 4), CHANNEL_1}, 127},
-}
+    {mux.pin(0), {60, CHANNEL_1}, 127},
+    {mux.pin(1), {61, CHANNEL_1}, 127},
+    {mux.pin(2), {62, CHANNEL_1}, 127},
+    {mux.pin(3), {63, CHANNEL_1}, 127},
+};
 
 void setup() {
-    pinMode(monitor, INPUT)
+    pinMode(monitor, INPUT);
     Control_Surface.begin();
 }
 
@@ -34,13 +35,13 @@ Action 3: shift low pin over by one
 
 if (timer) {
     for (uint8_t i = 0; i < mux.length(); i++) {
-        for (uint8_t j = 0; j < mux.lentgh(); j++) { //write all high
-            digitalWrite(mux.pin(j), HIGH)
+        for (uint8_t j = 0; j < mux.length(); j++) { //write all high
+            digitalWrite(mux.pin(j), HIGH);
         }
-    digitalWrite(mux.pin(i), LOW) //set target low
+    digitalWrite(mux.pin(i), LOW); //set target low
     if (digitalRead(monitor) == LOW) { //the thought here is we're writing outputs only above; in order for these buttons to recieve input they need to be manually written
-        button[i].update() == AH::Button::Falling
-    } else { buttons[i].update() == AH::Button::Rising
+        buttons[i].update() = AH::Button::Falling;
+    } else { buttons[i].update() = AH::Button::Rising; //compiling error: improper use of void. will need a different method to change the button state--review buttonmatrix?
     }
 }
 }
