@@ -21,7 +21,7 @@ NoteButton buttons[] {
 };
 
 void setup() {
-    pinMode(monitor, INPUT); //there's also an INPUT_PULLUP--this may need to be that
+    pinMode(monitor, INPUT_PULLUP); //PULLUP leaves everything off always. Regular INPUT makes LEDs flash very quickly (related to timer?) and then turn off when any button is held.
     Control_Surface.begin();
 }
 
@@ -34,14 +34,14 @@ Action 3: shift low pin over by one
 */
 
 if (timer) {
-    for (uint8_t i = 0; i < mux.length(); i++) {
-        for (uint8_t j = 0; j < mux.length(); j++) { //write all high
+    for (uint8_t i = 0; i < 4; i++) {
+        for (uint8_t j = 0; j < 4; j++) { //write all high
             digitalWrite(mux.pin(j), HIGH);
         }
     digitalWrite(mux.pin(i), LOW); //set target low
     if (digitalRead(monitor) == LOW) {
-        digitalWrite(mux.pin((i + 4)), HIGH) //turn on LED on register pins 4-8
-    } else { digitalWrite(mux.pin((i+4)), LOW) //turn off LED
+        digitalWrite(mux.pin((i + 4)), HIGH); //turn on LED on register pins 4-8
+    } else { digitalWrite(mux.pin((i+4)), LOW); //turn off LED
     }
 }
 }
