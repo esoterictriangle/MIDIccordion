@@ -1,8 +1,6 @@
 //goal eventually is to take the input of 8 switches and convert to a binary string, which is then sent as a program change MIDI message
 //I think the workflow will look like: 1) toggle button 9 to start listening 2) flip switches to binary number 3) toggle button 9 off to send message
 
-//String(number, BIN) //converts to binary string; DEC for decimal, HEX for hex
-//digitalRead(pin) //shows the value
 int pin1 = 6;
 int pin2 = 7;
 int pin3 = 8;
