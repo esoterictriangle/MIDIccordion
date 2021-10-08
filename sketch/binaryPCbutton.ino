@@ -1,7 +1,10 @@
 //basic idea: 1 toggle turns on this mode, remaps all of the pins in question (does this mean those pins need to be assigned in loop or setup instead of globally?)
 //re: (question) https://github.com/tttapa/Control-Surface/issues/308 shows how to disable an array and enable a different array; I think I can use it to disable one version of the toggle matrix an enable a second version
 //1 toggle starts listening for the binary. When all switches are in the correct position, this toggle is flipped back, sending the program change with the value from the binary switches.
-  
+
+//if I use a MIDIButtonMatrix (https://tttapa.github.io/Control-Surface-doc/Doxygen/d0/d54/classMIDIButtonMatrix.html), I can declare the sender type from this list https://tttapa.github.io/Control-Surface-doc/Doxygen/d1/dab/group__MIDI__Senders.html
+//the main drawback of a matrix is everything must send the same command. I will likely need to use a mux for the toggle bank!
+
 //taken from https://tttapa.github.io/Control-Surface-doc/Doxygen/d4/d3b/Custom-MIDI-Output-Element_8ino-example.html
   void update() final override {
     AH::Button::State state = button.update();        // Read the button
