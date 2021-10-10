@@ -3,7 +3,7 @@ using namespace ExtIO; //try commenting this out if this works
 
 USBMIDI_Interface midi;
 
-const AddresssMatrix<8,1> addresses {{
+const AddresssMatrix<8, 1> addresses {{
     {60},
     {61},
     {62},
