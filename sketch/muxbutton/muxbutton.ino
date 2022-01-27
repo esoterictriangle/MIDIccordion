@@ -23,6 +23,13 @@ NoteButton notes[] {
   {mux.pin(8), {MIDI_Notes::D(5), CHANNEL_1}},
   {mux.pin(9), {MIDI_Notes::E(5), CHANNEL_1}},
 };
+
+//NoteButtons<10> {
+//  {mux.pin(0), mux.pin(1), mux.pin(2), mux.pin(3), mux.pin(4), mux.pin(5), mux.pin(6), mux.pin(7), mux.pin(8),mux.pin(9)}, //array of pins
+//  {MIDI_Notes::C(4), CHANNEL_1}, //address of first button
+//  1, //increment size
+//  127, //velocity
+//};
   
   // Initialize the Control Surface
 void setup() {
